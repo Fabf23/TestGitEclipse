@@ -10,5 +10,6 @@ package Test;
  *
  */
 public class TestClasse {
-
+    /** TODO commenter le rôle de ce champ (attribut, rôle d'association) */
+    private int n;
 }

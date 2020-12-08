@@ -4,6 +4,8 @@
  */
 package classe;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * Classe permettant de simuler les actions d'un bureau de poste
  * @author f.mazenq
@@ -29,8 +31,10 @@ public class Simulation {
     private int iDureeSimulation;   
     
     /** TODO commenter le rôle de ce champ (attribut, rôle d'association) */
-    private int chrono;
+    private int iChrono;
 
+    /** TODO commenter le rôle de ce champ (attribut, rôle d'association) */
+    private BureauDePoste oBureauDePoste = new BureauDePoste();
     
     /**
      * TODO commenter l'état initial construit
@@ -40,7 +44,8 @@ public class Simulation {
         this.iNbGuichetParticulier = 0;
         this.iNbGuichetProfessionnel = 0;
         this.iDureeSimulation = 0;
-        this.chrono = 0;    
+        this.iChrono = 0; 
+        this.oBureauDePoste = new BureauDePoste();
     }
 
 
@@ -56,8 +61,36 @@ public class Simulation {
         this.iNbGuichetParticulier = iNbGuichetParticulier;
         this.iNbGuichetProfessionnel = iNbGuichetProfessionnel;
         this.iDureeSimulation = iDureeSimulation;
-        this.chrono = chrono;
-        
-        
+        this.iChrono = chrono;
+        this.oBureauDePoste = new BureauDePoste();       
     }
+    
+    /**
+     * Méthode permettant d'ajouter les clients à un bureau de poste
+     */
+    public void ajouterClientsBureauPoste() {
+        // Liste des clients
+        // Création de quelque service 
+        Service serviceUn = new Service ("Achat de timbre", 5);
+        Service serviceDeux = new Service ("Achat d'enveloppe", 5);
+
+        
+        int idClient = 1;
+
+        // Creation des clients particulier et ajout à notre bureau de poste
+        for (int i = 0 ; i < iNbClientParticulier; i++) {    
+            
+            Client client = new Client(serviceUn,0,"client" + idClient,false);
+            idClient++;
+            oBureauDePoste.ajouterClient(client);       
+        }
+        
+        // Creation des clients professionnels et ajout à notre bureau de poste
+        for (int i = 0 ; i < iNbClientProfessionnel; i++) {    
+            
+            Client client = new Client(serviceDeux,0,"client" + idClient,true);
+            idClient++;
+            oBureauDePoste.ajouterClient(client);       
+        }      
+    }  
 }

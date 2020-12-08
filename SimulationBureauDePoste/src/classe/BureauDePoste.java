@@ -73,5 +73,60 @@ public class BureauDePoste {
         this.listeClient = listeClient;
     }
     
+    /**
+     * TODO commenter le rôle de cette méthode
+     * @param client
+     */
+    public void ajouterClient (Client client) {
+        this.listeClient.add(client);
+    }
     
+    /**
+     * Supprime le client d'un guichet
+     * @param guichet
+     */
+    public void supprimerClient (Guichet guichet) {
+        guichet.supprimerClient();
+    }
+    
+    /**
+     * Méthode cherchant s'il y a des clients professionnels dans la liste
+     * @return client s'il y en a sinon null
+     */
+    public Client chercheClientPro () {
+
+        for (Client c : listeClient) {
+            if (c.getbEstProfessionnel()) {
+                return c;             
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Affecte a un guichet professionnel le premier client professionnel de la liste
+     * @return guichet libre pour le professionnel, null sinon
+     */
+    public Guichet rechercheGuichetPourProfesisonnel () {
+        
+        Client c = chercheClientPro();
+        
+        // S'il y a un client pro
+        if (c != null) {
+            
+            for (Guichet g : listeGuichet) {
+                if (g.isbEstProfessionnel() && g.isbOccupe() && g.isbOuvert()) {
+                    
+                    // Suppression du client de la liste
+                    listeClient.poll();
+                    
+                    // Ajout du client au guichet
+                    g.setoClient(c);
+                    
+                    return g;
+                }
+            }
+        }
+        return null;
+    }
 }
